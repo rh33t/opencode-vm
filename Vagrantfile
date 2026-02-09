@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "public_network", bridge: "eth0", ip: "192.168.1.10"
 
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = "1024"
+    vb.memory = "2048"
     vb.cpus = 2
     vb.name = "opencode"
   end
