@@ -1,0 +1,25 @@
+# Vagrant
+.vagrant/
+*.box
+
+# Projects
+projects/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Temp files
+*.tmp
+tmp/
+temp/
