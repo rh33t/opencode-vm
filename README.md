@@ -1,14 +1,14 @@
 # OpenCode VM Setup
 
-I built this to make **[OpenCode](https://opencode.ai/)** by [Anomaly](https://github.com/anomalyco) easier to use in my daily workflow. The tool's agent feature helps me streamline tasks like writing cybersecurity notes, analyzing code, or using **[0xdf's HTB AI Mentor](https://gitlab.com/0xdf/htb-ai-mentor)** for Hack The Box—without constantly copy-pasting prompts.
+Built to make **[OpenCode](https://opencode.ai/)** by [Anomaly](https://github.com/anomalyco) easier to use in daily workflow. The agent feature streamlines tasks like writing cybersecurity notes, analyzing code, or using **[0xdf's HTB AI Mentor](https://gitlab.com/0xdf/htb-ai-mentor)** for Hack The Box — without constantly copy-pasting prompts.
 
-This spins up an **Ubuntu VM** with OpenCode pre-configured and a **bind-mounted `projects` folder** for easy file access. I converted my prompts into `agents` for cleaner integration.
+## Why a VM?
 
-The VM keeps everything isolated—no mess on the host system, no risk of breaking stuff.
+AI agents execute arbitrary commands, read/write files, and make network requests — that's the whole point, but it also means **they should never run directly on your host machine**. This setup solves that by spinning up an isolated **Ubuntu VM** with OpenCode pre-configured and a **bind-mounted `projects` folder** for easy file access. Prompts are converted into `agents` for cleaner integration.
 
+The VM is the sandbox. Let it do the dirty work.
 
 ## Usage
-
 ```bash
 vagrant up
 vagrant ssh

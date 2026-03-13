@@ -2,7 +2,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/jammy64"
   config.vm.hostname = "opencode"
   config.vm.network "private_network", ip: "192.168.56.120"
-  config.vm.network "public_network", bridge: "eth0", ip: "192.168.1.10"
+  # config.vm.network "public_network", ip: "192.168.1.10"
 
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "2048"
@@ -29,5 +29,5 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", privileged: false, path: "scripts/install-opencode.sh"
 
   # Copy OpenCode agent configs
-  config.vm.provision "file", source: "opencode-config/agent", destination: "~/.config/opencode/agent"
+  config.vm.provision "file", source: "opencode-config/agents", destination: "~/.config/opencode/agents"
 end
