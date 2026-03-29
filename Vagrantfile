@@ -1,4 +1,5 @@
 Vagrant.configure("2") do |config|
+
   config.vm.box = "ubuntu/jammy64"
   config.vm.hostname = "opencode"
   config.vm.network "private_network", ip: "192.168.56.120"
@@ -30,4 +31,5 @@ Vagrant.configure("2") do |config|
 
   # Copy OpenCode agent configs
   config.vm.provision "file", source: "opencode-config/agents", destination: "~/.config/opencode/agents"
+
 end
