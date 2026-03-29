@@ -94,3 +94,8 @@ if [ -f /usr/share/bash-completion/bash_completion ]; then
 elif [ -f /etc/bash_completion ]; then
   . /etc/bash_completion
 fi
+
+# Auto-attach tmux on SSH
+if [[ -n "$SSH_CONNECTION" ]] && [[ -z "$TMUX" ]]; then
+  tmux attach-session -t main 2>/dev/null || tmux new-session -s main
+fi
