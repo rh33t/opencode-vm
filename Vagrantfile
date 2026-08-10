@@ -8,28 +8,30 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "2048"
     vb.cpus = 2
-    vb.name = "opencode"
+    vb.name = "opencode-box"
   end
+
+  # Setup directories (must run before the file provisioners below: Vagrant's
+  # file provisioner does not create missing destination parent directories)
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
+    mkdir -p ~/.local/bin ~/.config/opencode
+    rm -rf ~/.config/opencode/agents
+  SHELL
 
   # Copy dotfiles
   config.vm.provision "file", source: "dotfiles/.bashrc", destination: "~/.bashrc"
   config.vm.provision "file", source: "dotfiles/.tmux.conf", destination: "~/.tmux.conf"
   config.vm.provision "file", source: "dotfiles/.vimrc", destination: "~/.vimrc"
-  config.vm.provision "file", source: "scripts/tmux-sessionizer", destination: "~/.local/bin/tmux-sessionizer"
+  config.vm.provision "file", source: "tmux-sessionizer", destination: "~/.local/bin/tmux-sessionizer"
 
-  # Setup directories
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
-    mkdir -p ~/.local/bin
     chmod +x ~/.local/bin/tmux-sessionizer
   SHELL
 
-  # Install utilities and Node.js
-  config.vm.provision "shell", path: "scripts/setup-utilities.sh"
+  # Install utilities, Node.js, and OpenCode
+  config.vm.provision "shell", path: "install.sh"
 
-  # Install OpenCode
-  config.vm.provision "shell", privileged: false, path: "scripts/install-opencode.sh"
-
-  # Copy OpenCode agent configs
-  config.vm.provision "file", source: "opencode-config/agents", destination: "~/.config/opencode/agents"
+  # Copy OpenCode skills (trailing slash: copy contents, don't nest "skills/" again)
+  config.vm.provision "file", source: "skills/", destination: "~/.config/opencode/skills"
 
 end

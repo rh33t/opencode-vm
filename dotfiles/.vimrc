@@ -1,6 +1,3 @@
-" Create required directories
-" mkdir -p ~/.vim/{undo,backup,swap}
-
 " Basic settings
 set nocompatible
 syntax on
@@ -20,12 +17,6 @@ set wildmenu
 set wildmode=longest:full,full
 set lazyredraw
 set ttyfast
-
-" Persistent undo and backup
-set undofile
-set undodir=~/.vim/undo//
-set backupdir=~/.vim/backup//
-set directory=~/.vim/swap//
 
 " Mouse and splits
 set mouse=a
@@ -50,11 +41,9 @@ set listchars=tab:→\ ,trail:·,extends:>,precedes:<,nbsp:+
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType json setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType sh setlocal ts=2 sts=2 sw=2 expandtab
-autocmd BufWritePre * :%s/\s\+$//e
+autocmd BufWritePre * :keeppatterns %s/\s\+$//e
 
-" ============================================================================
-" Keyboard Shortcuts
-" ============================================================================
+" Keyboard shortcuts
 
 " Leader key
 let mapleader=" "
@@ -83,8 +72,16 @@ xnoremap <leader>p "_dP
 " File navigation
 nnoremap <leader>e :Explore<CR>
 
-" Make script executable
+" Make file executable
 nnoremap <leader>xxx :!chmod +x %<CR>
 
 " Quick save and source vimrc
 nnoremap <leader>vso :source $MYVIMRC<CR>
+
+" Terminal settings for bracketed paste mode
+if &term =~# '^\%(screen\|tmux\)'
+    let &t_BE = "\e[?2004h"
+    let &t_BD = "\e[?2004l"
+    execute "set t_PS=\e[200~"
+    execute "set t_PE=\e[201~"
+endif
